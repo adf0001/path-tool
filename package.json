@@ -1,0 +1,25 @@
+{
+  "name": "path-tool",
+  "version": "1.0.1",
+  "description": "path tool",
+  "main": "path-tool.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "path"
+  ],
+  "author": "fwg",
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adf0001/path-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adf0001/path-tool/issues"
+  },
+  "homepage": "https://github.com/adf0001/path-tool#readme"
+}
