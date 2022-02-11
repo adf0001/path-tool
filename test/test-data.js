@@ -1,80 +1,81 @@
 ﻿// global, for html page
 path_tool = require("../path-tool.js");
-assert = require("assert");
 
 module.exports = {
 
 	"dirPart()": function (done) {
+		done(!(
+			(path_tool.dirPart("aaa/bbb") === "aaa/") &&		//like path.dirname() + "/"
+			(path_tool.dirPart("aaa/bbb/") === "aaa/") &&
+			(path_tool.dirPart("aaa\\bbb") === "aaa\\") &&		//will not change original '/' or '\\'
+			(path_tool.dirPart("aaa\\bbb\\") === "aaa\\") &&
 
-		assert(path_tool.dirPart("aaa/bbb") === "aaa/");		//like path.dirname() + "/"
-		assert(path_tool.dirPart("aaa/bbb/") === "aaa/");
-		assert(path_tool.dirPart("aaa\\bbb") === "aaa\\");		//will not change original '/' or '\\'
-		assert(path_tool.dirPart("aaa\\bbb\\") === "aaa\\");
+			(path_tool.dirPart("aaa\\bbb\\", true) === "aaa") &&		//argument: removeTailSlash
 
-		assert(path_tool.dirPart("/") === "");
-		assert(path_tool.dirPart("\\") === "");
+			(path_tool.dirPart("/") === "") &&
+			(path_tool.dirPart("\\") === "") &&
 
-		assert(path_tool.dirPart("/aa") === "/");
-		assert(path_tool.dirPart("\\aa") === "\\");
-		assert(path_tool.dirPart("aa/") === "");
-		assert(path_tool.dirPart("aa\\") === "");
+			(path_tool.dirPart("/aa") === "/") &&
+			(path_tool.dirPart("\\aa") === "\\") &&
+			(path_tool.dirPart("aa/") === "") &&
+			(path_tool.dirPart("aa\\") === "")
 
-		done(false);
+		));
 	},
 
 	"normalize()": function (done) {
 
-		assert(path_tool.normalize("aaa///\\//\\//bbb") === "aaa/bbb");		//shrink //
-		assert(path_tool.normalize("aaa\\///\\//\\//bbb") === "aaa\\bbb");
+		done(!(
+			(path_tool.normalize("aaa///\\//\\//bbb") === "aaa/bbb") &&		//shrink //
+			(path_tool.normalize("aaa\\///\\//\\//bbb") === "aaa\\bbb") &&
 
-		assert(path_tool.normalize("/./aaa") === "/aaa");	//shrink /./
-		assert(path_tool.normalize("./aaa") === "aaa");
+			(path_tool.normalize("/./aaa") === "/aaa") &&		//shrink /./
+			(path_tool.normalize("./aaa") === "aaa") &&
 
-		assert(path_tool.normalize("aaa/./") === "aaa/");
-		assert(path_tool.normalize("aaa/.") === "aaa/");
+			(path_tool.normalize("aaa/./") === "aaa/") &&
+			(path_tool.normalize("aaa/.") === "aaa/") &&
 
-		assert(path_tool.normalize("aaa/./bbb") === "aaa/bbb");
-		assert(path_tool.normalize("aaa/././bbb") === "aaa/bbb");
-		assert(path_tool.normalize("aaa/./bbb/././ccc") === "aaa/bbb/ccc");
+			(path_tool.normalize("aaa/./bbb") === "aaa/bbb") &&
+			(path_tool.normalize("aaa/././bbb") === "aaa/bbb") &&
+			(path_tool.normalize("aaa/./bbb/././ccc") === "aaa/bbb/ccc") &&
 
-		assert(path_tool.normalize("aaa/../bbb") === "bbb");	//shrink dir/../
-		assert(path_tool.normalize("/aaa/../bbb") === "/bbb");
+			(path_tool.normalize("aaa/../bbb") === "bbb") &&		//shrink dir/../
+			(path_tool.normalize("/aaa/../bbb") === "/bbb") &&
 
-		assert(path_tool.normalize("/../bbb") === "/../bbb");
-		assert(path_tool.normalize("../bbb") === "../bbb");
+			(path_tool.normalize("/../bbb") === "/../bbb") &&
+			(path_tool.normalize("../bbb") === "../bbb") &&
 
-		assert(path_tool.normalize("bbb/../") === "");
-		assert(path_tool.normalize("bbb/..") === "");
-		assert(path_tool.normalize("/bbb/../") === "/");
-		assert(path_tool.normalize("/bbb/..") === "/");
+			(path_tool.normalize("bbb/../") === "") &&
+			(path_tool.normalize("bbb/..") === "") &&
+			(path_tool.normalize("/bbb/../") === "/") &&
+			(path_tool.normalize("/bbb/..") === "/") &&
 
-		assert(path_tool.normalize("aaa/bbb/ccc/../../ddd") === "aaa/ddd");
-		assert(path_tool.normalize("aaa/bbb/../ccc/../../ddd") === "ddd");
+			(path_tool.normalize("aaa/bbb/ccc/../../ddd") === "aaa/ddd") &&
+			(path_tool.normalize("aaa/bbb/../ccc/../../ddd") === "ddd") &&
 
-		assert(path_tool.normalize("aaa/bbb/../ccc/../../../ddd") === "../ddd");
-		assert(path_tool.normalize("/aaa/bbb/../ccc/../../../ddd") === "/../ddd");
-		assert(path_tool.normalize("../aaa/bbb/../ccc/../../../ddd") === "../../ddd");
+			(path_tool.normalize("aaa/bbb/../ccc/../../../ddd") === "../ddd") &&
+			(path_tool.normalize("/aaa/bbb/../ccc/../../../ddd") === "/../ddd") &&
+			(path_tool.normalize("../aaa/bbb/../ccc/../../../ddd") === "../../ddd") &&
 
-		//old test code
-		
-		assert(path_tool.normalize("111/././222/333/444/../../555/")==='111/222/555/');
-		assert(path_tool.normalize("111/././222/333/444/../../555/../")==='111/222/');
-		assert(path_tool.normalize("111/././222/333/444/../../555/..")==='111/222/');
-		assert(path_tool.normalize("111/././222/333/444/../../555/./")==='111/222/555/');
-		assert(path_tool.normalize("111/././222/333/444/../../555/.")==='111/222/555/');
-		assert(path_tool.normalize("./111/././222/333/444/../../555/.")==='111/222/555/');
-		assert(path_tool.normalize("././111/././222/333/444/../../555/.")==='111/222/555/');
-		assert(path_tool.normalize("/./111/././222/333/444/../../555/.")==='/111/222/555/');
-		assert(path_tool.normalize("/../111/././222/333/444/../../555/.")==='/../111/222/555/');
-		assert(path_tool.normalize("../111/././222/333/444/../../555/.")==='../111/222/555/');
-		assert(path_tool.normalize("../111/.././222/333/444/../../555/.")==='../222/555/');
-		assert(path_tool.normalize("../111/../../222/333/444/../../555/.")==='../../222/555/');
-		assert(path_tool.normalize("../../111/../../222/333/444/../../555/.")==='../../../222/555/');
-		assert(path_tool.normalize("/../../111/../../222/333/444/../../555/.")==='/../../../222/555/');
-		assert(path_tool.normalize("/../../.11/../../222/333./4.44/../../555/.")==='/../../../222/555/');
-		assert(path_tool.normalize("/../../..11/../../222/333../4..44/../../555/.")==='/../../../222/555/');
+			//old test code
 
-		done(false);
+			(path_tool.normalize("111/././222/333/444/../../555/") === '111/222/555/') &&
+			(path_tool.normalize("111/././222/333/444/../../555/../") === '111/222/') &&
+			(path_tool.normalize("111/././222/333/444/../../555/..") === '111/222/') &&
+			(path_tool.normalize("111/././222/333/444/../../555/./") === '111/222/555/') &&
+			(path_tool.normalize("111/././222/333/444/../../555/.") === '111/222/555/') &&
+			(path_tool.normalize("./111/././222/333/444/../../555/.") === '111/222/555/') &&
+			(path_tool.normalize("././111/././222/333/444/../../555/.") === '111/222/555/') &&
+			(path_tool.normalize("/./111/././222/333/444/../../555/.") === '/111/222/555/') &&
+			(path_tool.normalize("/../111/././222/333/444/../../555/.") === '/../111/222/555/') &&
+			(path_tool.normalize("../111/././222/333/444/../../555/.") === '../111/222/555/') &&
+			(path_tool.normalize("../111/.././222/333/444/../../555/.") === '../222/555/') &&
+			(path_tool.normalize("../111/../../222/333/444/../../555/.") === '../../222/555/') &&
+			(path_tool.normalize("../../111/../../222/333/444/../../555/.") === '../../../222/555/') &&
+			(path_tool.normalize("/../../111/../../222/333/444/../../555/.") === '/../../../222/555/') &&
+			(path_tool.normalize("/../../.11/../../222/333./4.44/../../555/.") === '/../../../222/555/') &&
+			(path_tool.normalize("/../../..11/../../222/333../4..44/../../555/.") === '/../../../222/555/')
+		));
 	},
 
 };

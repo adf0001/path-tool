@@ -3,8 +3,9 @@
 // path tool
 
 module.exports = {
-	dirPart: function (path) {	//like path.dirname() + "/"
-		return path.replace(/[\\\/]+$/, "").replace(/[^\\\/]+$/, "");
+	dirPart: function (path, removeTailSlash) {	//like path.dirname() + "/"
+		var s = path.replace(/[^\\\/]*[\\\/]*$/, "");
+		return removeTailSlash ? s.replace(/[\\\/]+$/, "") : s;
 	},
 
 	normalize: function (path) {		//like path.normalize()
