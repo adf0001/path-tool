@@ -20,4 +20,9 @@ module.exports = {
 		return path;
 	},
 
+	//unify path to a key string
+	keyString: function (path) {
+		return path.replace(/[\\\/]+/g, "/").replace(/\/+$/, "");
+	},
+
 }

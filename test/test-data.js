@@ -79,6 +79,17 @@ module.exports = {
 		));
 	},
 
+	"keyString()": function (done) {
+
+		done(!(
+			(path_tool.keyString("aaa///\\//\\//bbb") === "aaa/bbb") &&
+			(path_tool.keyString("aaa\\bbb\\") === "aaa/bbb") &&
+
+			(path_tool.keyString("http://aaa") === "http:/aaa") &&
+			(path_tool.keyString("\\\\SS-PC\\shared") === "/SS-PC/shared")
+		));
+	},
+
 };
 
 // for html page
