@@ -1,4 +1,5 @@
-﻿// global, for html page
+
+//global variable, for html page, refer tpsvr @ npm.
 path_tool = require("../path-tool.js");
 
 module.exports = {
@@ -85,4 +86,4 @@ module.exports = {
 if (typeof showResult !== "function") showResult = function (text) { console.log(text); }
 
 //for mocha
-if (typeof describe === "function") describe('mocha-test', function () { for (var i in module.exports) { it(i, module.exports[i]); } });
+if (typeof describe === "function") describe('path_tool', function () { for (var i in module.exports) { it(i, module.exports[i]).timeout(5000); } });

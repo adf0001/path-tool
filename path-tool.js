@@ -1,6 +1,5 @@
 
-// path-tool @ npm
-// path tool
+// path-tool @ npm, path tool
 
 module.exports = {
 	dirPart: function (path, removeTailSlash) {	//like path.dirname() + "/"

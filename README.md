@@ -6,52 +6,58 @@ path tool
 npm install path-tool
 ```
 
-# Usage
+# Usage & Api
 ```javascript
 var path_tool = require("path-tool");
 
-assert(path_tool.dirPart("aaa/bbb") === "aaa/");		//like path.dirname() + "/"
-assert(path_tool.dirPart("aaa/bbb/") === "aaa/");
-assert(path_tool.dirPart("aaa\\bbb") === "aaa\\");		//will not change original '/' or '\\'
-assert(path_tool.dirPart("aaa\\bbb\\") === "aaa\\");
+//.dirPart(path, removeTailSlash)		//like path.dirname() + "/"
 
-assert(path_tool.dirPart("/") === "");
-assert(path_tool.dirPart("\\") === "");
+(path_tool.dirPart("aaa/bbb") === "aaa/") &&
+(path_tool.dirPart("aaa/bbb/") === "aaa/") &&
+(path_tool.dirPart("aaa\\bbb") === "aaa\\") &&		//will not change original '/' or '\\'
+(path_tool.dirPart("aaa\\bbb\\") === "aaa\\") &&
 
-assert(path_tool.dirPart("/aa") === "/");
-assert(path_tool.dirPart("\\aa") === "\\");
-assert(path_tool.dirPart("aa/") === "");
-assert(path_tool.dirPart("aa\\") === "");
+(path_tool.dirPart("aaa\\bbb\\", true) === "aaa") &&		//argument: removeTailSlash
 
-assert(path_tool.normalize("aaa///\\//\\//bbb") === "aaa/bbb");		//shrink //
-assert(path_tool.normalize("aaa\\///\\//\\//bbb") === "aaa\\bbb");
+(path_tool.dirPart("/") === "") &&
+(path_tool.dirPart("\\") === "") &&
 
-assert(path_tool.normalize("/./aaa") === "/aaa");	//shrink /./
-assert(path_tool.normalize("./aaa") === "aaa");
+(path_tool.dirPart("/aa") === "/") &&
+(path_tool.dirPart("\\aa") === "\\") &&
+(path_tool.dirPart("aa/") === "") &&
+(path_tool.dirPart("aa\\") === "");
 
-assert(path_tool.normalize("aaa/./") === "aaa/");
-assert(path_tool.normalize("aaa/.") === "aaa/");
+//.normalize(path)		//like path.normalize()
 
-assert(path_tool.normalize("aaa/./bbb") === "aaa/bbb");
-assert(path_tool.normalize("aaa/././bbb") === "aaa/bbb");
-assert(path_tool.normalize("aaa/./bbb/././ccc") === "aaa/bbb/ccc");
+(path_tool.normalize("aaa///\\//\\//bbb") === "aaa/bbb") &&		//shrink //
+(path_tool.normalize("aaa\\///\\//\\//bbb") === "aaa\\bbb") &&
 
-assert(path_tool.normalize("aaa/../bbb") === "bbb");	//shrink dir/../
-assert(path_tool.normalize("/aaa/../bbb") === "/bbb");
+(path_tool.normalize("/./aaa") === "/aaa") &&		//shrink /./
+(path_tool.normalize("./aaa") === "aaa") &&
 
-assert(path_tool.normalize("/../bbb") === "/../bbb");
-assert(path_tool.normalize("../bbb") === "../bbb");
+(path_tool.normalize("aaa/./") === "aaa/") &&
+(path_tool.normalize("aaa/.") === "aaa/") &&
 
-assert(path_tool.normalize("bbb/../") === "");
-assert(path_tool.normalize("bbb/..") === "");
-assert(path_tool.normalize("/bbb/../") === "/");
-assert(path_tool.normalize("/bbb/..") === "/");
+(path_tool.normalize("aaa/./bbb") === "aaa/bbb") &&
+(path_tool.normalize("aaa/././bbb") === "aaa/bbb") &&
+(path_tool.normalize("aaa/./bbb/././ccc") === "aaa/bbb/ccc") &&
 
-assert(path_tool.normalize("aaa/bbb/ccc/../../ddd") === "aaa/ddd");
-assert(path_tool.normalize("aaa/bbb/../ccc/../../ddd") === "ddd");
+(path_tool.normalize("aaa/../bbb") === "bbb") &&		//shrink dir/../
+(path_tool.normalize("/aaa/../bbb") === "/bbb") &&
 
-assert(path_tool.normalize("aaa/bbb/../ccc/../../../ddd") === "../ddd");
-assert(path_tool.normalize("/aaa/bbb/../ccc/../../../ddd") === "/../ddd");
-assert(path_tool.normalize("../aaa/bbb/../ccc/../../../ddd") === "../../ddd");
+(path_tool.normalize("/../bbb") === "/../bbb") &&
+(path_tool.normalize("../bbb") === "../bbb") &&
+
+(path_tool.normalize("bbb/../") === "") &&
+(path_tool.normalize("bbb/..") === "") &&
+(path_tool.normalize("/bbb/../") === "/") &&
+(path_tool.normalize("/bbb/..") === "/") &&
+
+(path_tool.normalize("aaa/bbb/ccc/../../ddd") === "aaa/ddd") &&
+(path_tool.normalize("aaa/bbb/../ccc/../../ddd") === "ddd") &&
+
+(path_tool.normalize("aaa/bbb/../ccc/../../../ddd") === "../ddd") &&
+(path_tool.normalize("/aaa/bbb/../ccc/../../../ddd") === "/../ddd") &&
+(path_tool.normalize("../aaa/bbb/../ccc/../../../ddd") === "../../ddd");
 
 ```
