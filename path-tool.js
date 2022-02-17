@@ -25,7 +25,7 @@ var keyString = function (path, ignoreCase) {
 }
 
 //check if 2 paths are same
-var isSame = function (path1, path2, ignoreCase) {
+var samePath = function (path1, path2, ignoreCase) {
 	return keyString(path1, ignoreCase) === keyString(path2, ignoreCase);
 }
 
@@ -35,5 +35,5 @@ module.exports = {
 	dirPart: dirPart,
 	normalize: normalize,
 	keyString: keyString,
-	isSame: isSame,
+	samePath: samePath,
 }

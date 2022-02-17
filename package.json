@@ -1,6 +1,6 @@
 {
   "name": "path-tool",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "path tool",
   "main": "path-tool.js",
   "scripts": {

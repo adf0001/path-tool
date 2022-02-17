@@ -79,7 +79,7 @@ module.exports = {
 		));
 	},
 
-	"keyString() & isSame()": function (done) {
+	"keyString() & samePath()": function (done) {
 
 		done(!(
 			(path_tool.keyString("aaa///\\//\\//bbb") === "aaa/bbb") &&
@@ -89,8 +89,8 @@ module.exports = {
 			(path_tool.keyString("\\\\SS-PC\\shared") === "/SS-PC/shared") &&
 			(path_tool.keyString("\\\\SS-PC\\shared", true) === "/ss-pc/shared") &&
 
-			(path_tool.isSame("\\\\SS-PC\\shared", "\\\\SS-PC\\SHARED") === false) &&
-			(path_tool.isSame("\\\\SS-PC\\shared", "\\\\SS-PC\\SHARED", true) === true) &&
+			(path_tool.samePath("\\\\SS-PC\\shared", "\\\\SS-PC\\SHARED") === false) &&
+			(path_tool.samePath("\\\\SS-PC\\shared", "\\\\SS-PC\\SHARED", true) === true) &&
 			true
 		));
 	},
